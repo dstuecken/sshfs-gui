@@ -433,11 +433,11 @@
 	switch(implementation)
 	{
 		case IMPLEMENTATION_PRQSORG:
-			cmd = [NSString stringWithFormat:@"/Applications/sshfs/bin/mount_sshfs -p %d %@ '%@@%@:%@' '%@' >%s 2>&1", intPort, cmdlnOpt, log, srv, remote_dir, mnt_loc, ERR_TMPFILE];
+			cmd = [NSString stringWithFormat:@"/Applications/sshfs/bin/mount_sshfs -p %d %@ '%@@%@:%@' '%@'", intPort, cmdlnOpt, log, srv, remote_dir, mnt_loc];
 			break;
 		case IMPLEMENTATION_MACFUSE:
 			chdir( [[[NSBundle mainBundle] bundlePath] UTF8String] );
-			cmd = [NSString stringWithFormat:@"sshfs '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@ >%s 2>&1", log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @"", ERR_TMPFILE];
+			cmd = [NSString stringWithFormat:@"sshfs '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@", log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @""];
 			break;
 	}
 	
