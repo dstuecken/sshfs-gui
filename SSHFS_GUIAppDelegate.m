@@ -157,9 +157,7 @@
 		
 		
 		[def setBool:YES forKey:@"compression"];
-		
 		[def setBool:YES forKey:@"wasLaunched"];
-		
 		[def setBool:YES forKey:@"useKeychain"];
 		
 	}	
@@ -172,7 +170,7 @@
 	if(!recentServersDataSource) recentServersDataSource = [[RecentServersProvider alloc] init];
 	[recentServersView setDataSource:recentServersDataSource];
 	
-	[self getCommandPreview];
+	[command setStringValue:[self getCommandPreview]];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -682,7 +680,9 @@
 		
 		[alert runModal];
 		
-		//printf("mount finished at %s with code %d and error text: %s\n", [mountPoint UTF8String], opcode, [errorText UTF8String]);
+#ifndef RELEASE
+		NSLog(@"mount finished at %@ with code %d and error text: %@\n", mountPoint, opcode, errorText);
+#endif
 	}else if(opcode == SIGTERM)
 	{
 		// unfortunately, some processes are left after we terminate all our direct children processes, so we will kill all the rest hanging processes manually

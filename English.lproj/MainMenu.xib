@@ -562,6 +562,7 @@ It can be either relative to home folder or absolute</string>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
+                            <binding destination="555" name="value" keyPath="values.port" id="Scq-uY-upC"/>
                             <outlet property="delegate" destination="494" id="XvP-7c-hZb"/>
                         </connections>
                     </textField>
