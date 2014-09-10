@@ -1,6 +1,7 @@
 sshfs-gui
 =========
 
+Download Installer: http://dvlpr.de/sshfs-gui/sshfs-gui.dmg
 
 <img src="https://raw.githubusercontent.com/dstuecken/sshfs-gui/master/screenshot.png" width="500">
 
