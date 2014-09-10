@@ -1,0 +1,568 @@
+// !$*UTF8*$!
+{
+	089C165DFE840E0CC02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 583}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 45}";
+		};
+	};
+	256AC3D80F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 1078}}";
+			sepNavSelRange = "{1169, 0}";
+			sepNavVisRange = "{581, 1104}";
+			sepNavWindowFrame = "{{7, 295}, {1433, 578}}";
+		};
+	};
+	256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 9674}}";
+			sepNavSelRange = "{6973, 0}";
+			sepNavVisRange = "{0, 1139}";
+			sepNavWindowFrame = "{{7, 4}, {1433, 874}}";
+		};
+	};
+	256AC3F00F4B6AF500CF3369 /* SSHFS_GUI_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 756}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 149}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeArchitecturePreference = i386;
+		activeBuildConfigurationName = Release;
+		activeExecutable = 5BA95FF910F9A6CD005F0186 /* SSHFS GUI */;
+		activeSDKPreference = macosx10.5;
+		activeTarget = 8D1107260486CEB800E47090 /* SSHFS GUI */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* SSHFS GUI */,
+		);
+		breakpoints = (
+		);
+		codeSenseManager = 5BA9601710F9A6D5005F0186 /* Code sense */;
+		executables = (
+			5BA95FF910F9A6CD005F0186 /* SSHFS GUI */,
+		);
+		expressions = (
+			def,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					881,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					993,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					1007,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					933,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					969,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					953,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 312407372;
+			PBXWorkspaceStateSaveDate = 312407372;
+		};
+		perUserProjectItems = {
+			5B28D5C2111FA334003676C3 = 5B28D5C2111FA334003676C3 /* PBXTextBookmark */;
+			5B28E1F41122463B00E1EECF = 5B28E1F41122463B00E1EECF /* PBXTextBookmark */;
+			5B349BD5129EF55D00CDAE45 /* PBXTextBookmark */ = 5B349BD5129EF55D00CDAE45 /* PBXTextBookmark */;
+			5B349BE6129EF5EE00CDAE45 /* PBXTextBookmark */ = 5B349BE6129EF5EE00CDAE45 /* PBXTextBookmark */;
+			5B349BEE129EF7CA00CDAE45 /* PBXTextBookmark */ = 5B349BEE129EF7CA00CDAE45 /* PBXTextBookmark */;
+			5B349BF2129EF80700CDAE45 /* PBXTextBookmark */ = 5B349BF2129EF80700CDAE45 /* PBXTextBookmark */;
+			5B349BFC129EF9A100CDAE45 /* PBXTextBookmark */ = 5B349BFC129EF9A100CDAE45 /* PBXTextBookmark */;
+			5B349BFD129EF9A100CDAE45 /* PBXTextBookmark */ = 5B349BFD129EF9A100CDAE45 /* PBXTextBookmark */;
+			5B349BFE129EF9A100CDAE45 /* PBXTextBookmark */ = 5B349BFE129EF9A100CDAE45 /* PBXTextBookmark */;
+			5B349BFF129EF9A100CDAE45 /* PBXTextBookmark */ = 5B349BFF129EF9A100CDAE45 /* PBXTextBookmark */;
+			5B349C00129EF9A100CDAE45 /* PBXTextBookmark */ = 5B349C00129EF9A100CDAE45 /* PBXTextBookmark */;
+			5B38611E111E53C500F086AC = 5B38611E111E53C500F086AC /* PlistBookmark */;
+			5B40603A10FA12B90085BEF3 = 5B40603A10FA12B90085BEF3 /* PBXTextBookmark */;
+			5B437A6F11E08BBA008E482D = 5B437A6F11E08BBA008E482D /* PBXTextBookmark */;
+			5B437AAD11E09BA7008E482D = 5B437AAD11E09BA7008E482D /* PBXTextBookmark */;
+			5B437AB811E09EC7008E482D = 5B437AB811E09EC7008E482D /* PBXTextBookmark */;
+			5B5949F310FF26FA00316BCB = 5B5949F310FF26FA00316BCB /* PBXBookmark */;
+			5B62F72F129EE9AB004EF116 = 5B62F72F129EE9AB004EF116 /* PBXTextBookmark */;
+			5B6A0EF3111FD4D200CB89DD = 5B6A0EF3111FD4D200CB89DD /* PBXTextBookmark */;
+			5BCBEDB5111A25DB00C93ECC = 5BCBEDB5111A25DB00C93ECC /* PBXTextBookmark */;
+			5BED1DD0129EF53D0002778D = 5BED1DD0129EF53D0002778D /* PBXTextBookmark */;
+			5BED1DD1129EF53D0002778D = 5BED1DD1129EF53D0002778D /* PBXTextBookmark */;
+			5BED1DD2129EF53D0002778D = 5BED1DD2129EF53D0002778D /* PBXTextBookmark */;
+			5BED1DD3129EF53D0002778D = 5BED1DD3129EF53D0002778D /* PBXTextBookmark */;
+		};
+		sourceControlManager = 5BA9601610F9A6D5005F0186 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 784}}";
+			sepNavSelRange = "{226, 0}";
+			sepNavVisRange = "{3, 1182}";
+			sepNavWindowFrame = "{{7, 68}, {1433, 810}}";
+		};
+	};
+	5B10719C111F2D7900D8888A /* RecentServersProvider.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 685}}";
+			sepNavSelRange = "{239, 0}";
+			sepNavVisRange = "{0, 714}";
+		};
+	};
+	5B10719D111F2D7900D8888A /* RecentServersProvider.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 2114}}";
+			sepNavSelRange = "{1793, 0}";
+			sepNavVisRange = "{337, 1186}";
+			sepNavWindowFrame = "{{15, 69}, {750, 809}}";
+		};
+	};
+	5B28D5C2111FA334003676C3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B28D5C3111FA334003676C3 /* sshnodelay.c */;
+		name = "sshnodelay.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 490;
+		vrLoc = 0;
+	};
+	5B28D5C3111FA334003676C3 /* sshnodelay.c */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.c;
+		name = sshnodelay.c;
+		path = "/Users/yuriy/Downloads/sshfs-fuse-2.2/sshnodelay.c";
+		sourceTree = "<absolute>";
+	};
+	5B28E1F41122463B00E1EECF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B28E1F51122463B00E1EECF /* CFBase.h */;
+		name = "CFBase.h: 395";
+		rLen = 23;
+		rLoc = 12922;
+		rType = 0;
+		vrLen = 1299;
+		vrLoc = 12009;
+	};
+	5B28E1F51122463B00E1EECF /* CFBase.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = CFBase.h;
+		path = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/CoreFoundation.framework/Versions/A/Headers/CFBase.h;
+		sourceTree = "<absolute>";
+	};
+	5B349BD5129EF55D00CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 232";
+		rLen = 0;
+		rLoc = 6506;
+		rType = 0;
+		vrLen = 1439;
+		vrLoc = 5611;
+	};
+	5B349BE6129EF5EE00CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 286";
+		rLen = 0;
+		rLoc = 8301;
+		rType = 0;
+		vrLen = 1448;
+		vrLoc = 7119;
+	};
+	5B349BEE129EF7CA00CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 609";
+		rLen = 0;
+		rLoc = 19278;
+		rType = 0;
+		vrLen = 1736;
+		vrLoc = 18074;
+	};
+	5B349BF2129EF80700CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 247";
+		rLen = 0;
+		rLoc = 6973;
+		rType = 0;
+		vrLen = 1621;
+		vrLoc = 6049;
+	};
+	5B349BFC129EF9A100CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D80F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.h */;
+		name = "SSHFS_GUIAppDelegate.h: 55";
+		rLen = 0;
+		rLoc = 1169;
+		rType = 0;
+		vrLen = 1104;
+		vrLoc = 581;
+	};
+	5B349BFD129EF9A100CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 247";
+		rLen = 0;
+		rLoc = 6973;
+		rType = 0;
+		vrLen = 1139;
+		vrLoc = 0;
+	};
+	5B349BFE129EF9A100CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B10719C111F2D7900D8888A /* RecentServersProvider.h */;
+		name = "RecentServersProvider.h: 14";
+		rLen = 0;
+		rLoc = 239;
+		rType = 0;
+		vrLen = 714;
+		vrLoc = 0;
+	};
+	5B349BFF129EF9A100CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B10719D111F2D7900D8888A /* RecentServersProvider.m */;
+		name = "RecentServersProvider.m: 87";
+		rLen = 0;
+		rLoc = 1793;
+		rType = 0;
+		vrLen = 1186;
+		vrLoc = 337;
+	};
+	5B349C00129EF9A100CDAE45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 16";
+		rLen = 0;
+		rLoc = 226;
+		rType = 0;
+		vrLen = 1182;
+		vrLoc = 3;
+	};
+	5B38611E111E53C500F086AC /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* SSHFS_GUI-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/yuriy/projects/SSHFS GUI/SSHFS_GUI-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	5B40603A10FA12B90085BEF3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B40603B10FA12B90085BEF3 /* SSHFS_GUIAppDelegate.s */;
+		name = "SSHFS_GUIAppDelegate.s: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1225;
+		vrLoc = 0;
+	};
+	5B40603B10FA12B90085BEF3 /* SSHFS_GUIAppDelegate.s */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.asm;
+		name = SSHFS_GUIAppDelegate.s;
+		path = "/Users/yuriy/projects/SSHFS GUI/build/SSHFS GUI.build/Release/SSHFS GUI.build/Objects-normal/i386/SSHFS_GUIAppDelegate.s";
+		sourceTree = "<absolute>";
+	};
+	5B437A6F11E08BBA008E482D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5BCBEE7E111A440700C93ECC /* asker.c */;
+		name = "asker.c: 5";
+		rLen = 0;
+		rLoc = 98;
+		rType = 0;
+		vrLen = 1205;
+		vrLoc = 0;
+	};
+	5B437AAD11E09BA7008E482D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 16";
+		rLen = 0;
+		rLoc = 226;
+		rType = 0;
+		vrLen = 1153;
+		vrLoc = 125;
+	};
+	5B437AB811E09EC7008E482D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B594A7C10FFA6AE00316BCB /* shared.h */;
+		name = "shared.h: 11";
+		rLen = 0;
+		rLoc = 213;
+		rType = 0;
+		vrLen = 281;
+		vrLoc = 0;
+	};
+	5B5949C710FF1F2900316BCB /* asker.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1089, 1316}}";
+			sepNavSelRange = "{78, 0}";
+			sepNavVisRange = "{0, 478}";
+		};
+	};
+	5B5949F310FF26FA00316BCB /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 5B5CBD7110FB267000BD468E /* icon.icns */;
+	};
+	5B594A7C10FFA6AE00316BCB /* shared.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1171, 687}}";
+			sepNavSelRange = "{213, 0}";
+			sepNavVisRange = "{0, 281}";
+		};
+	};
+	5B62F72F129EE9AB004EF116 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D80F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.h */;
+		name = "SSHFS_GUIAppDelegate.h: 39";
+		rLen = 0;
+		rLoc = 848;
+		rType = 0;
+		vrLen = 1034;
+		vrLoc = 0;
+	};
+	5B6A0EF3111FD4D200CB89DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3F00F4B6AF500CF3369 /* SSHFS_GUI_Prefix.pch */;
+		name = "SSHFS_GUI_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 149;
+		vrLoc = 0;
+	};
+	5BA95FF910F9A6CD005F0186 /* SSHFS GUI */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "SSHFS GUI";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+			$cs = 1;
+			$ds = 1;
+			$eax = 1;
+			$ebp = 1;
+			$ebx = 1;
+			$ecx = 1;
+			$edi = 1;
+			$edx = 1;
+			$eflags = 1;
+			$eip = 1;
+			$es = 1;
+			$esi = 1;
+			$esp = 1;
+			$fs = 1;
+			$gs = 1;
+			$mxcsr = 1;
+			$ss = 1;
+		};
+	};
+	5BA9601610F9A6D5005F0186 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "sshfs-gui.googlecode.com";
+			};
+		};
+	};
+	5BA9601710F9A6D5005F0186 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	5BCBEDB5111A25DB00C93ECC /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 45;
+		vrLoc = 0;
+	};
+	5BCBEE7E111A440700C93ECC /* asker.c */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.c;
+		path = asker.c;
+		sourceTree = "<group>";
+	};
+	5BED1DD0129EF53D0002778D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B10719C111F2D7900D8888A /* RecentServersProvider.h */;
+		name = "RecentServersProvider.h: 28";
+		rLen = 0;
+		rLoc = 519;
+		rType = 0;
+		vrLen = 882;
+		vrLoc = 0;
+	};
+	5BED1DD1129EF53D0002778D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5B10719D111F2D7900D8888A /* RecentServersProvider.m */;
+		name = "RecentServersProvider.m: 131";
+		rLen = 0;
+		rLoc = 2466;
+		rType = 0;
+		vrLen = 1549;
+		vrLoc = 2275;
+	};
+	5BED1DD2129EF53D0002778D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 232";
+		rLen = 0;
+		rLoc = 6518;
+		rType = 0;
+		vrLen = 1735;
+		vrLoc = 5897;
+	};
+	5BED1DD3129EF53D0002778D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D90F4B6AC300CF3369 /* SSHFS_GUIAppDelegate.m */;
+		name = "SSHFS_GUIAppDelegate.m: 248";
+		rLen = 0;
+		rLoc = 7007;
+		rType = 0;
+		vrLen = 1490;
+		vrLoc = 5731;
+	};
+	8D1107260486CEB800E47090 /* SSHFS GUI */ = {
+		activeExec = 0;
+		executables = (
+			5BA95FF910F9A6CD005F0186 /* SSHFS GUI */,
+		);
+	};
+	8D1107310486CEB800E47090 /* SSHFS_GUI-Info.plist */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{15, 4}, {1036, 874}}";
+		};
+	};
+}

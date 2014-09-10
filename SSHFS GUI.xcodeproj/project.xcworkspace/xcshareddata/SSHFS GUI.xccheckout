@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D7B516EE-DFD6-46D8-A82A-38EEB92627BE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SSHFS GUI</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>40470E6E-AC36-4A82-A057-2CCBFB2BAC16</key>
+		<string>http://sshfs-gui.googlecode.com/svn/trunk</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SSHFS GUI.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>40470E6E-AC36-4A82-A057-2CCBFB2BAC16</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>40470E6E-AC36-4A82-A057-2CCBFB2BAC16</key>
+		<string>http://sshfs-gui.googlecode.com/svn</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://sshfs-gui.googlecode.com/svn/trunk/SSHFS%20GUI.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>40470E6E-AC36-4A82-A057-2CCBFB2BAC16</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>branches</string>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
+			<string>tags</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>trunk</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>40470E6E-AC36-4A82-A057-2CCBFB2BAC16</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sshfs-gui</string>
+		</dict>
+	</array>
+</dict>
+</plist>
