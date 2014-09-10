@@ -339,13 +339,13 @@
 
 - (IBAction)showAboutPanel:(id)sender
 {
-	const char *credits_html = "<div style='font-family: \"Lucida Grande\"; font-size: 10px;' align='center'>Project is located at <br><a href='http://code.google.com/p/sshfs-gui/'>http://code.google.com/p/sshfs-gui/</a></div>";
+	const char *credits_html = "<div style='font-family: \"Lucida Grande\"; font-size: 10px;' align='center'>Project is located at <br><a href='https://github.com/dstuecken/sshfs-gui'>https://github.com/dstuecken/sshfs-gui</a></div>";
 	
 	NSData *HTML = [[NSData alloc] initWithBytes:credits_html length:strlen(credits_html)];
 	NSAttributedString *credits = [[NSAttributedString alloc] initWithHTML:HTML documentAttributes:NULL];
 	
 	
-	NSString *version = @"1.1";
+	NSString *version = @"1.2";
 	NSString *applicationVersion = [NSString stringWithFormat:@"Version %@", version];
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"Credits", @"Version", @"ApplicationVersion", nil];
