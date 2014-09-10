@@ -54,7 +54,8 @@
 {
 	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	int length, tmp, action;
+	unsigned long length;
+	int tmp, action;
 	char *str = "", buf[1025];
 	
 	NSMutableString *msg;
@@ -75,7 +76,7 @@
 				msg = [[NSMutableString alloc] initWithUTF8String:""];
 				
 				read(pipes_read[0], &length, sizeof(length));
-				while( (tmp = read(pipes_read[0], buf, length >= sizeof(buf)-1 ? sizeof(buf)-1 : length)) > 0 )
+				while( (tmp = (int) read(pipes_read[0], buf, length >= sizeof(buf)-1 ? sizeof(buf)-1 : length)) > 0 )
 				{
 					buf[tmp] = 0;
 					length -= tmp;
@@ -169,7 +170,6 @@
 	}
 	
 	if(!recentServersDataSource) recentServersDataSource = [[RecentServersProvider alloc] init];
-	
 	[recentServersView setDataSource:recentServersDataSource];
 	
 	[self getCommandPreview];
@@ -200,6 +200,11 @@
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
 {
 	return YES;
+}
+
+- (IBAction)addServerToRecents:(id)sender
+{
+	[recentServersDataSource addEntryWithServer:[server stringValue] port:[port intValue] login:[login stringValue] directory:[directory stringValue] cmdOpt:[cmdLineOptions stringValue]];
 }
 
 - (IBAction)removeButtonClicked:(id)sender
@@ -241,28 +246,28 @@
 		if([[NSUserDefaults standardUserDefaults] boolForKey:@"useKeychain"])
 		{
 			const char *serverName = [host UTF8String];
-			int serverNameLength = strlen(serverName);
+			UInt32 serverNameLength = (UInt32) strlen(serverName);
 			
 			const char *accountName = [[login stringValue] UTF8String];
-			int accountNameLength = strlen(accountName);
+			UInt32 accountNameLength = (UInt32) strlen(accountName);
 			
 			const char *path;
 			
 			if([remoteDir length] > 0) path = [remoteDir UTF8String];
 			else path = "/~";
 			
-			int pathLength = strlen(path);
+			UInt32 pathLength = (UInt32) strlen(path);
 			
 			UInt32 passwordLength;
 			void *passwordData;
 			
 #ifndef RELEASE
-			NSLog(@"Using KeyChain to retrieve password for %s@%s:%d%s", accountName, serverName, port, path);
+			NSLog(@"Using KeyChain to retrieve password for %s@%s:%@%s", accountName, serverName, [port stringValue], path);
 #endif
 			
 			OSStatus retVal;
 			
-			if( (retVal = SecKeychainFindInternetPassword(NULL, serverNameLength, serverName, 0, NULL, accountNameLength, accountName, pathLength, path, port, kSecProtocolTypeSSH, kSecAuthenticationTypeDefault, &passwordLength, &passwordData, NULL)) == 0)
+			if( (retVal = SecKeychainFindInternetPassword(NULL, serverNameLength, serverName, 0, NULL, accountNameLength, accountName, pathLength, path, [port intValue], kSecProtocolTypeSSH, kSecAuthenticationTypeDefault, &passwordLength, &passwordData, NULL)) == 0)
 			{
 #ifndef RELEASE				
 				NSLog(@"Found the password in KeyChain");
@@ -369,7 +374,7 @@
 	
 	NSAlert *alert = [NSAlert alertWithMessageText:@"Authenticity check" defaultButton:@"Accept key" alternateButton:@"Dismiss key" otherButton:nil informativeTextWithFormat:@"%@", buf];
 	
-	int response = [alert runModal];
+	long response = [alert runModal];
 	
 	if(response == NSAlertDefaultReturn)
 	{
@@ -524,7 +529,7 @@
 	{
 		alert = [NSAlert alertWithMessageText:@"Already mounted" defaultButton:@"No" alternateButton:@"Yes" otherButton:nil informativeTextWithFormat:@"It looks like you have already mounted this volume. It is strongly recommended to unmount it first.\n\nIf you continue, you might experience undesired side effects, especially if you have just switched the SSHFS implementation.\n\nDo you want to continue?"];
 		
-		int response = [alert runModal];
+		long response = [alert runModal];
 		
 		if(response == NSAlertDefaultReturn) canContinue = NO;
 		shouldSkipConnectionError = YES;
@@ -623,10 +628,10 @@
 			SecKeychainItemRef itemRef;
 			
 			const char *serverName = [srv UTF8String];
-			int serverNameLength = strlen(serverName);
+			UInt32 serverNameLength = (UInt32) strlen(serverName);
 			
 			const char *accountName = [[login stringValue] UTF8String];
-			int accountNameLength = strlen(accountName);
+			UInt32 accountNameLength = (UInt32) strlen(accountName);
 			
 			//char *path = "/~"; // do you have any other options which would mean a home directory (the directory mounted by SSHFS is by default HOME directory, not root) :)?
 			const char *path;
@@ -634,10 +639,10 @@
 			if([remote_dir length] > 0) path = [remote_dir UTF8String];
 			else path = "/~";
 			
-			int pathLength = strlen(path);
+			UInt32 pathLength = (UInt32) strlen(path);
 			
 			const char *passwordData = [[password stringValue] UTF8String];
-			int passwordLength = strlen(passwordData);
+			UInt32 passwordLength = (UInt32) strlen(passwordData);
 			
 			if(SecKeychainFindInternetPassword(NULL, serverNameLength, serverName, 0, NULL, accountNameLength, accountName, pathLength, path, intPort, kSecProtocolTypeSSH, kSecAuthenticationTypeDefault, NULL, NULL, &itemRef) == 0 /* means all is ok */)
 			{
@@ -670,7 +675,8 @@
 		
 		[recentServersView reloadData];
 		
-	}else if(opcode != SIGTERM && !shouldSkipConnectionError) // if error code is SIGTERM, this means our app killed the process by ourselves (look at stopButtonClicked: code)
+	}
+	else if(opcode != SIGTERM && !shouldSkipConnectionError) // if error code is SIGTERM, this means our app killed the process by ourselves (look at stopButtonClicked: code)
 	{
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Could not connect" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:errorText];
 		

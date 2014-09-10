@@ -59,7 +59,7 @@
 - (IBAction)connectButtonClicked:(id)sender;
 - (IBAction)stopButtonClicked:(id)sender;
 - (IBAction)removeButtonClicked:(id)sender;
-- (IBAction)configChagned:(id)sender;
+- (IBAction)addServerToRecents:(id)sender;
 
 - (IBAction)cellAction:(id)sender;
 

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface RecentServersProvider : NSObject {
+@interface RecentServersProvider : NSObject <NSTableViewDataSource> {
 	
 	NSUserDefaults *_def;
 }

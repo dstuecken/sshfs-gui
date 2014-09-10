@@ -66,7 +66,6 @@
 		//NSLog(@"%@", newEntries);
 		
 		[_def removeObjectForKey:@"recentServers"];
-		
 		[_def setObject:newEntries forKey:@"servers"];
 	}
 	
@@ -131,7 +130,9 @@
 	
 	int port = [[dict objectForKey:@"port"] intValue];
 	
-	if(port != 22) [str appendFormat:@":%d", port];
+	if(port != 22) {
+		//[str appendFormat:@":%d", port];
+	}
 	
 	NSString *dir = [dict objectForKey:@"dir"];
 	if([dir length] > 0)
