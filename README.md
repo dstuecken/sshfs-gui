@@ -6,7 +6,7 @@ sshfs-gui
 
 ### Readme
 
-sshfs-gui is a GUI wrapper for either MacFUSE SSHFS (preferred) or the implementation at http://pqrs.org/macosx/sshfs/
+sshfs-gui is a GUI wrapper for SSHFS
 
 You need Mac OS X 10.5+ and at least one of the utilities listed below:
 
