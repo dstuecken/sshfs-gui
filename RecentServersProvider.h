@@ -15,9 +15,8 @@
 }
 
 - (id)init;
-- (void)dealloc;
 
-- (void)addEntryWithServer:(NSString *)server port:(int)port login:(NSString *)login directory:(NSString *)directory cmdOpt:(NSString *)cmdOpt;
+- (void)addEntryWithServer:(NSString *)server port:(int)port login:(NSString *)login directory:(NSString *)directory cmdOpt:(NSString *)cmdOpt localDirectory: (NSString *)localDirectory;
 - (NSDictionary *)getDictAtIndex:(NSUInteger)rowIndex;
 - (void)deleteDictAtIndex:(NSUInteger)rowIndex;
 
