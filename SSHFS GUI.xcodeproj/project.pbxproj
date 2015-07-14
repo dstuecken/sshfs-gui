@@ -277,8 +277,9 @@
 				GCC_PREFIX_HEADER = SSHFS_GUI_Prefix.pch;
 				INFOPLIST_FILE = "SSHFS_GUI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "SSHFS GUI";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -295,8 +296,9 @@
 				GCC_PREFIX_HEADER = SSHFS_GUI_Prefix.pch;
 				INFOPLIST_FILE = "SSHFS_GUI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "SSHFS GUI";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};

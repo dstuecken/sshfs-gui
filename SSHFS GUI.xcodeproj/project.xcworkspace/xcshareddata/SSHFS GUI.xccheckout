@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>3D9B3DA1-E3E3-4F74-A99D-775E83448564</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>SSHFS GUI</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2F01377E140FCC1D1118C4797C0065349D63B7CC</key>
 		<string>https://github.com/dstuecken/sshfs-gui.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>SSHFS GUI.xcodeproj/project.xcworkspace</string>
+	<string>SSHFS GUI.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2F01377E140FCC1D1118C4797C0065349D63B7CC</key>
