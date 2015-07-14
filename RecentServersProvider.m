@@ -20,7 +20,7 @@
 	
 	self = [super init];
 	
-	_def = [[NSUserDefaults standardUserDefaults] retain];
+	_def = [NSUserDefaults standardUserDefaults];
 	
 	oldEntries = [_def objectForKey:@"recentServers"];
 	
@@ -91,7 +91,7 @@
 	[_def setObject:servers forKey:@"servers"];
 }
 
-- (void)addEntryWithServer:(NSString *)server port:(int)port login:(NSString *)login directory:(NSString *)directory cmdOpt:(NSString *)cmdOpt
+- (void)addEntryWithServer:(NSString *)server port:(int)port login:(NSString *)login directory:(NSString *)directory cmdOpt:(NSString *)cmdOpt localDirectory: (NSString *)localDirectory
 {
 	NSMutableArray *servers = [NSMutableArray arrayWithArray:[_def objectForKey:@"servers"]];
 	
@@ -102,6 +102,7 @@
 	[row setValue:login forKey:@"login"];
 	[row setValue:directory forKey:@"dir"];
 	[row setValue:cmdOpt forKey:@"arguments"];
+	[row setValue:localDirectory forKey:@"localDir"];
 	
 	[servers removeObject:row];
 	[servers insertObject:row atIndex:0];
@@ -141,14 +142,10 @@
 		else [str appendFormat:@" on %@", dir];
 	}
 	
+	[str appendFormat:@" -> %@", [dict objectForKey:@"localDir"]];
+	
 	return str;
 }
 
-- (void)dealloc
-{
-	[_def dealloc];
-	
-	[super dealloc];
-}
 
 @end

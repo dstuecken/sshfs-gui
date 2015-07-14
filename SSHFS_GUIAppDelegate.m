@@ -5,6 +5,8 @@
 //  Created by Юрий Насретдинов on 10.01.10.
 //  Copyright 2010 МФТИ. All rights reserved.
 //
+//  Edited by Dennis Stücken in 2015
+//
 
 #include <stdio.h>
 #include <unistd.h>
@@ -93,7 +95,6 @@
 				
 				str = (char*) [msg UTF8String]; // get an autoreleased UTF8String copy of the MutableString
 				
-				[msg release];
 				
 				break;
 		}
@@ -115,6 +116,7 @@
 #endif
 	
 	[command setEditable:FALSE];
+	[pathControl setURL:[NSURL URLWithString:localDirectory.stringValue]];
 	
 	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
 	
@@ -143,22 +145,29 @@
 		if( [mng fileExistsAtPath:@"/Library/Frameworks/MacFUSE.framework"] )
 		{
 			[def setObject:@"MacFUSE" forKey:@"implementation"];
-		}else if( [mng fileExistsAtPath:@"/Applications/sshfs/bin/mount_sshfs"] )
+		}
+		else if( [mng fileExistsAtPath:@"/usr/local/bin/sshfs"] )
+		{
+			[def setObject:@"SSHFS Binary" forKey:@"implementation"];
+		}
+		else if( [mng fileExistsAtPath:@"/Applications/sshfs/bin/mount_sshfs"] )
 		{
 			[def setObject:@"pqrs.org" forKey:@"implementation"];
-		}else
+		}
+		else
 		{
-			NSAlert *alert = [NSAlert alertWithMessageText:@"SSHFS is not available" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"No implementations found\n(either one at http://pqrs.org/macosx/sshfs/ or MacFUSE at http://code.google.com/p/macfuse/).\n\nClick OK to quit the application"];
+			NSAlert *alert = [NSAlert alertWithMessageText:@"SSHFS auto detection failed" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Go to settings and configure the path to your sshfs binary."];
 			
 			[alert runModal];
 			
-			[currentApp terminate:nil];
+			//[currentApp terminate:nil];
 		}
 		
 		
 		[def setBool:YES forKey:@"compression"];
 		[def setBool:YES forKey:@"wasLaunched"];
 		[def setBool:YES forKey:@"useKeychain"];
+		[def setValue:@"" forKey:@"sshfsPath"];
 		
 	}	
 	
@@ -170,7 +179,7 @@
 	if(!recentServersDataSource) recentServersDataSource = [[RecentServersProvider alloc] init];
 	[recentServersView setDataSource:recentServersDataSource];
 	
-	[command setStringValue:[self getCommandPreview]];
+	[command setStringValue:[self getCommandString]];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
@@ -200,9 +209,44 @@
 	return YES;
 }
 
+- (IBAction)openFileDialog:(id)sender
+{
+	// Create the File Open Dialog class.
+	NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+	
+	// Enable the selection of files in the dialog.
+	[openDlg setCanChooseFiles:NO];
+	
+	// Multiple files not allowed
+	[openDlg setAllowsMultipleSelection:NO];
+	
+	// Can't select a directory
+	[openDlg setCanChooseDirectories:YES];
+	
+	// Display the dialog. If the OK button was pressed,
+	// process the files.
+	if ( [openDlg runModal] == NSModalResponseOK )
+	{
+		//NSLog(@"Url: %@", [[openDlg URLs] lastObject]);
+		//NSURL *fileURL = [NSURL URLWithString:[[openDlg URLs] lastObject]];
+		//NSLog(@"Url: %@", [fileURL path]);
+
+		NSString *path = [[[openDlg URLs] lastObject] path];
+		[localDirectory setStringValue:[path stringByReplacingOccurrencesOfString:@"file://" withString:@""]];
+		
+		[pathControl setURL:[NSURL URLWithString:[[[openDlg URLs] lastObject] path]]];
+		[command setStringValue:[self getCommandString]];
+	}
+}
+
+-(void) addServerToRecents
+{
+	[recentServersDataSource addEntryWithServer:[server stringValue] port:[port intValue] login:[login stringValue] directory:[directory stringValue] cmdOpt:[cmdLineOptions stringValue] localDirectory:[localDirectory stringValue]];
+}
+
 - (IBAction)addServerToRecents:(id)sender
 {
-	[recentServersDataSource addEntryWithServer:[server stringValue] port:[port intValue] login:[login stringValue] directory:[directory stringValue] cmdOpt:[cmdLineOptions stringValue]];
+	[self addServerToRecents];
 }
 
 - (IBAction)removeButtonClicked:(id)sender
@@ -218,7 +262,7 @@
 	if([recentServersView selectedRow] < 0) [removeButton setEnabled:NO];
 }
 
-- (IBAction)cellAction:(id)sender
+- (void) loadRecentServerSelection
 {
 	NSInteger rowIndex;
 	
@@ -227,13 +271,14 @@
 		[removeButton setEnabled:YES];
 		
 		NSDictionary *row = [recentServersDataSource getDictAtIndex:rowIndex];
-				
+		
 		NSString *log  = [row objectForKey:@"login"];
 		NSString *host = [row objectForKey:@"server"];
 		
 		[login  setStringValue:log];
 		[server setStringValue:host];
 		[port setStringValue:[row objectForKey:@"port"]];
+		[localDirectory setStringValue:[row objectForKey:@"localDir"]];
 		
 		NSString *remoteDir = [row objectForKey:@"dir"];
 		NSString *arguments = [row objectForKey:@"arguments"];
@@ -267,7 +312,7 @@
 			
 			if( (retVal = SecKeychainFindInternetPassword(NULL, serverNameLength, serverName, 0, NULL, accountNameLength, accountName, pathLength, path, [port intValue], kSecProtocolTypeSSH, kSecAuthenticationTypeDefault, &passwordLength, &passwordData, NULL)) == 0)
 			{
-#ifndef RELEASE				
+#ifndef RELEASE
 				NSLog(@"Found the password in KeyChain");
 #endif
 				
@@ -278,10 +323,9 @@
 				[password setStringValue:passValue];
 				
 				SecKeychainItemFreeContent(NULL, passwordData);
-				[passValue release];
 			}else
 			{
-#ifndef RELEASE				
+#ifndef RELEASE
 				NSString *errmsg = (NSString*)SecCopyErrorMessageString(retVal, NULL);
 				
 				NSLog(@"Could not fetch info from KeyChain, recieved code %d with following explanation: %@", retVal, errmsg);
@@ -292,7 +336,7 @@
 				[password setStringValue:@""];
 				//[password selectText:nil];
 			}
-
+			
 			
 		}
 		
@@ -301,6 +345,18 @@
 	{
 		[removeButton setEnabled:NO];
 	}
+	
+	[command setStringValue:[self getCommandString]];
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+	[self loadRecentServerSelection];
+}
+
+- (IBAction)cellAction:(id)sender
+{
+	[self loadRecentServerSelection];
 }
 
 - (IBAction)connectButtonClicked:(id)sender
@@ -345,21 +401,29 @@
 	NSAttributedString *credits = [[NSAttributedString alloc] initWithHTML:HTML documentAttributes:NULL];
 	
 	
-	NSString *version = @"1.2";
+	NSString *version = @"1.3";
 	NSString *applicationVersion = [NSString stringWithFormat:@"Version %@", version];
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"Credits", @"Version", @"ApplicationVersion", nil];
 	NSArray *objects = [NSArray arrayWithObjects:credits, @"", applicationVersion, nil];
 	NSDictionary *options = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 	
-	[HTML release];
-	[credits release];
 	
 	[currentApp orderFrontStandardAboutPanelWithOptions:options];
 }
 
+- (void)windowWillClose:(NSNotification *)notification;
+{
+	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+	[def setObject:[preferencesWindowSshfsPath stringValue] forKey:@"sshfsPath"];
+	sshfsPath = [preferencesWindowSshfsPath stringValue];
+	
+	[command setStringValue:[self getCommandString]];
+}
+
 - (IBAction)showPreferencesPane:(id)sender
 {
+	[preferencesWindow setDelegate:self];
 	[preferencesWindow setIsVisible:YES];
 }
 
@@ -406,45 +470,106 @@
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
-	[command setStringValue:[self getCommandPreview]];
+	[command setStringValue:[self getCommandString]];
 	
 	return YES;
 }
 
--(NSString*) getCommandPreview
+-(NSString*) getCommandString
 {
+	// load settings
+	[self loadSettings];
+	
 	NSString *srv  = [server stringValue];
 	NSString *log  = [login stringValue];
 	int intPort = [self getPort];
 	
-	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-	compression = [def boolForKey:@"compression"];
-	useKeychain = [def boolForKey:@"useKeychain"];
-	
-	if( [[def stringForKey:@"implementation"] isEqualToString:@"MacFUSE"] ) implementation = IMPLEMENTATION_MACFUSE;
-	else                                                                    implementation = IMPLEMENTATION_PRQSORG;
-	
 	// prepare variables for execution of mount_sshfs
-	
-	NSString *mnt_loc = [NSString stringWithFormat:@"/Volumes/%@@%@", log, srv];
-	NSString *cmd;
-	
+	NSString *mnt_loc = [self getLocalMountPathWith:[login stringValue] andServer:[server stringValue]];
+
 	NSString *remote_dir = [directory stringValue];
-	
 	NSString *cmdlnOpt = [cmdLineOptions stringValue];
 	
 	switch(implementation)
 	{
 		case IMPLEMENTATION_PRQSORG:
-			cmd = [NSString stringWithFormat:@"/Applications/sshfs/bin/mount_sshfs -p %d %@ '%@@%@:%@' '%@'", intPort, cmdlnOpt, log, srv, remote_dir, mnt_loc];
+			return [NSString stringWithFormat:@"%@ -p %d %@ '%@@%@:%@' '%@'", sshfsPath, intPort, cmdlnOpt, log, srv, remote_dir, mnt_loc];
 			break;
+		case IMPLEMENTATION_CUSTOM:
+			if ([sshfsPath isEqualToString:@""] || sshfsPath == nil)
+			{
+				sshfsPath = @"sshfs";
+			}
+			
+			return [NSString stringWithFormat:@"%@ '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@ >%s 2>&1", sshfsPath, log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @"", ERR_TMPFILE];
 		case IMPLEMENTATION_MACFUSE:
 			chdir( [[[NSBundle mainBundle] bundlePath] UTF8String] );
-			cmd = [NSString stringWithFormat:@"sshfs '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@", log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @""];
+			return [NSString stringWithFormat:@"%@ '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@", sshfsPath, log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @""];
 			break;
 	}
 	
-	return cmd;
+	return @"";
+}
+
+-(void) loadSettings
+{
+	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+	compression = [def boolForKey:@"compression"];
+	useKeychain = [def boolForKey:@"useKeychain"];
+	
+	if( [[def stringForKey:@"implementation"] isEqualToString:@"MacFUSE"] )
+	{
+		implementation = IMPLEMENTATION_MACFUSE;
+		sshfsPath = @"sshfs";
+	}
+	else if( [[def stringForKey:@"implementation"] isEqualToString:@"SSHFS Binary"] )
+	{
+		implementation = IMPLEMENTATION_CUSTOM;
+		sshfsPath = [def stringForKey:@"sshfsPath"];
+	}
+	else
+	{
+		implementation = IMPLEMENTATION_PRQSORG;
+		sshfsPath = @"/Applications/sshfs/bin/mount_sshfs";
+	}
+}
+
+- (NSString *) getLocalMountPathWith: (NSString *) user andServer: (NSString *) address
+{
+	if ([[localDirectory stringValue] isEqualToString:@""])
+	{
+		return  [NSString stringWithFormat:@"/Volumes/%@@%@", user, address];
+	}
+	else
+	{
+		return [localDirectory stringValue];
+	}
+}
+
+- (BOOL) isVolumeMounted: (NSString *) volume
+{
+	NSArray *keys = [NSArray arrayWithObjects:NSURLVolumeNameKey, NSURLVolumeIsEjectableKey, nil];
+	NSArray *urls = [[NSFileManager defaultManager] mountedVolumeURLsIncludingResourceValuesForKeys:keys options:0];
+	for (NSURL *url in urls)
+	{
+		NSError *error;
+		NSNumber *isRemovable;
+		NSString *volumeName;
+		
+		[url getResourceValue:&isRemovable forKey:NSURLVolumeIsRemovableKey error:&error];
+		//if ([isRemovable boolValue])
+		{
+			[url getResourceValue:&volumeName forKey:NSURLVolumeNameKey error:&error];
+			NSLog(@"%@", volumeName);
+			
+			if (!([volumeName rangeOfString:volume].location == NSNotFound) || [volumeName isEqualToString:volume])
+			{
+				return true;
+			}
+		}
+	}
+	
+	return false;
 }
 
 // the connection to the server itself is run on a separate thread to prevent application UI blocking
@@ -452,42 +577,34 @@
 {
 	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+	// load settings
+	[self loadSettings];
 	NSFileManager *mng = [NSFileManager defaultManager];
 	
 	NSAlert *alert;
 	
-	NSString *srv  = [server stringValue];
-	NSString *log  = [login stringValue];
-	int intPort = [self getPort];
-	
-	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-	compression = [def boolForKey:@"compression"];
-	useKeychain = [def boolForKey:@"useKeychain"];
-	
-	if( [[def stringForKey:@"implementation"] isEqualToString:@"MacFUSE"] ) implementation = IMPLEMENTATION_MACFUSE;
-	else                                                                    implementation = IMPLEMENTATION_PRQSORG;
-	
-	// prepare variables for execution of mount_sshfs
-	
-	NSString *mnt_loc = [NSString stringWithFormat:@"/Volumes/%@@%@", log, srv];
-	NSString *cmd;
-	
+	// prepare some variables
+	NSString *srv        = [server stringValue];
+	NSString *log        = [login stringValue];
+	int intPort          = [self getPort];
+	NSString *mnt_loc    = [self getLocalMountPathWith:[login stringValue] andServer:[server stringValue]];
+	NSString *cmd        = [self getCommandString];
 	NSString *remote_dir = [directory stringValue];
+	NSString *cmdlnOpt   = [cmdLineOptions stringValue];
 	
-	NSString *cmdlnOpt = [cmdLineOptions stringValue];
-	
-	switch(implementation)
+	if (![mng fileExistsAtPath:mnt_loc])
 	{
-		case IMPLEMENTATION_PRQSORG:
-			cmd = [NSString stringWithFormat:@"/Applications/sshfs/bin/mount_sshfs -p %d %@ '%@@%@:%@' '%@' >%s 2>&1", intPort, cmdlnOpt, log, srv, remote_dir, mnt_loc, ERR_TMPFILE];
-			break;
-		case IMPLEMENTATION_MACFUSE:
-			chdir( [[[NSBundle mainBundle] bundlePath] UTF8String] );
-			cmd = [NSString stringWithFormat:@"./Contents/Resources/sshfs-static-leopard '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@ >%s 2>&1", log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @"", ERR_TMPFILE];
-			break;
+		/*
+		NSAlert *alert = [[NSAlert alloc]init];
+		[alert setAlertStyle:NSCriticalAlertStyle];
+		[alert setMessageText:[NSString stringWithFormat:@"Warning: The local directory \"%@\" does not exist. Please create it in order to mount a remote share.", [localDirectory stringValue]]];
+		[alert addButtonWithTitle:@"OK"];
+		[alert beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode)
+		 {
+			 
+		 }];
+		 */
 	}
-	
-	//NSLog(@"%@", cmd);
 	
 	// check for errors in input parameters
 	
@@ -523,15 +640,21 @@
 		canContinue = NO;
 		
 		errorText = @"Login cannot be empty";
-	}else if([[NSFileManager defaultManager] fileExistsAtPath:mnt_loc])
+	}
+	else if ([self isVolumeMounted:srv])
 	{
-		alert = [NSAlert alertWithMessageText:@"Already mounted" defaultButton:@"No" alternateButton:@"Yes" otherButton:nil informativeTextWithFormat:@"It looks like you have already mounted this volume. It is strongly recommended to unmount it first.\n\nIf you continue, you might experience undesired side effects, especially if you have just switched the SSHFS implementation.\n\nDo you want to continue?"];
+		NSAlert *alert = [[NSAlert alloc]init];
+		[alert setAlertStyle:NSCriticalAlertStyle];
+		[alert setMessageText:[NSString stringWithFormat:@"You have already mounted this volume under \"%@\". Unmount it first, please!", [localDirectory stringValue]]];
+		[alert addButtonWithTitle:@"OK"];
 		
 		long response = [alert runModal];
+		//if(response == NSAlertFirstButtonReturn) canContinue = NO;
+		//shouldSkipConnectionError = YES;
 		
-		if(response == NSAlertDefaultReturn) canContinue = NO;
-		shouldSkipConnectionError = YES;
-	}else if(implementation == IMPLEMENTATION_PRQSORG && ![mng fileExistsAtPath:@"/Applications/sshfs/bin/mount_sshfs"])
+		canContinue = NO;
+	}
+	else if(implementation == IMPLEMENTATION_PRQSORG && ![mng fileExistsAtPath:@"/Applications/sshfs/bin/mount_sshfs"])
 	{
 		alert = [NSAlert alertWithMessageText:@"SSHFS console utility missing" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You do not seem to have SSHFS console utility from pqrs.org installed.\n\nPlease download and install it either from\nhttp://pqrs.org/macosx/sshfs/\n\nor from SSHFS GUI project at\n\nhttp://code.google.com/p/sshfs-gui/"];
 	
@@ -567,20 +690,21 @@
 		{
 			errorText = @"Permission denied. Please verify your login and password.";
 		}
+		
+		NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+									mnt_loc,                                   @"mountPoint",
+									errorText,                                 @"errorText",
+									[NSString stringWithFormat:@"%d", opcode], @"opcode",
+									[NSString stringWithFormat:@"%d", intPort],@"port",
+									srv,                                       @"server",
+									remote_dir,                                @"remote_dir",
+									cmdlnOpt,                                  @"arguments",
+									nil];
+		
+		[self performSelectorOnMainThread:@selector(finishConnectToServer:) withObject:dictionary waitUntilDone:NO];
 	}
-
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-	 mnt_loc,                                   @"mountPoint",
-	 errorText,                                 @"errorText",
-	 [NSString stringWithFormat:@"%d", opcode], @"opcode",
-	 [NSString stringWithFormat:@"%d", intPort],@"port",
-	 srv,                                       @"server",
-	 remote_dir,                                @"remote_dir",
-     cmdlnOpt,                                  @"arguments",
-	nil];
 	
-	[self performSelectorOnMainThread:@selector(finishConnectToServer:) withObject:dictionary waitUntilDone:NO];
-	
+	[self setConnectingState:NO];
 	//[pool release];
 }
 
@@ -594,7 +718,6 @@
 	
 	system([cmd UTF8String]);
 	
-	[cmd release];
 	
 	va_end(argumentList);
 }
@@ -615,11 +738,7 @@
 	if(opcode == 0)
 	{
 		system([[NSString stringWithFormat:@"open '%@'", mountPoint] UTF8String]);
-		
-		//NSString *serverStr = [NSString stringWithFormat:@"%@@%@%@", [login stringValue], srv, intPort != 22 ? [NSString stringWithFormat:@":%d", intPort] : @"" ];
-		
-		//[recentServersDataSource addEntry:serverStr];
-		[recentServersDataSource addEntryWithServer:srv port:intPort login:[login stringValue] directory:remote_dir cmdOpt:arguments];
+		[recentServersDataSource addEntryWithServer:srv port:intPort login:[login stringValue] directory:remote_dir cmdOpt:arguments localDirectory:mountPoint];
 		
 		if(useKeychain)
 		{
@@ -687,8 +806,18 @@
 	{
 		// unfortunately, some processes are left after we terminate all our direct children processes, so we will kill all the rest hanging processes manually
 		
-		if(implementation == IMPLEMENTATION_PRQSORG)      [self killByPattern:@"/Applications/sshfs/bin/mount_sshfs -p %d %@@%@", intPort, [login stringValue], srv];
-		else if(implementation == IMPLEMENTATION_MACFUSE) [self killByPattern:@"./Contents/Resources/sshfs-static-leopard %@@%@:", [login stringValue], srv];
+		if(implementation == IMPLEMENTATION_PRQSORG)
+		{
+			[self killByPattern:@"/Applications/sshfs/bin/mount_sshfs -p %d %@@%@", intPort, [login stringValue], srv];
+		}
+		else if(implementation == IMPLEMENTATION_CUSTOM)
+		{
+			[self killByPattern:@"sshfs %@@%@:", [login stringValue], srv];
+		}
+		else if(implementation == IMPLEMENTATION_MACFUSE)
+		{
+			[self killByPattern:@"./Contents/Resources/sshfs-static-leopard %@@%@:", [login stringValue], srv];
+		}
 		
 		[self killByPattern:@"ssh .* %@@%@ -s sftp", [login stringValue], srv];
 		

@@ -7,32 +7,32 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>3D9B3DA1-E3E3-4F74-A99D-775E83448564</string>
 	<key>IDESourceControlProjectName</key>
-	<string>SSHFS GUI</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>8C0E9CE0-50E0-4B7A-9A82-0538EA253BFC</key>
+		<key>2F01377E140FCC1D1118C4797C0065349D63B7CC</key>
 		<string>https://github.com/dstuecken/sshfs-gui.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>SSHFS GUI.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>8C0E9CE0-50E0-4B7A-9A82-0538EA253BFC</key>
+		<key>2F01377E140FCC1D1118C4797C0065349D63B7CC</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/dstuecken/sshfs-gui.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>8C0E9CE0-50E0-4B7A-9A82-0538EA253BFC</string>
+	<string>2F01377E140FCC1D1118C4797C0065349D63B7CC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8C0E9CE0-50E0-4B7A-9A82-0538EA253BFC</string>
+			<string>2F01377E140FCC1D1118C4797C0065349D63B7CC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>sshfs-gui</string>
 		</dict>
