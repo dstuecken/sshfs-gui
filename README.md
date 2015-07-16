@@ -19,4 +19,4 @@ Otherwise this GUI won't function.
 
 ### Credits 
 
-Note that this is a fork of https://code.google.com/p/sshfs-gui/ by Юрий Насретдинов, which unfortunately is not hosted on github.
+Note that this is a fork of https://code.google.com/p/sshfs-gui/ by Юрий Насретдинов, which unfortunately is not hosted on github - and not maintained anymore.
