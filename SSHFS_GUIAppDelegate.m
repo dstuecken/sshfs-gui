@@ -591,10 +591,10 @@
 	NSString *cmd        = [self getCommandString];
 	NSString *remote_dir = [directory stringValue];
 	NSString *cmdlnOpt   = [cmdLineOptions stringValue];
-	
+
+	/*
 	if (![mng fileExistsAtPath:mnt_loc])
 	{
-		/*
 		NSAlert *alert = [[NSAlert alloc]init];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert setMessageText:[NSString stringWithFormat:@"Warning: The local directory \"%@\" does not exist. Please create it in order to mount a remote share.", [localDirectory stringValue]]];
@@ -603,8 +603,8 @@
 		 {
 			 
 		 }];
-		 */
 	}
+	*/
 	
 	// check for errors in input parameters
 	
@@ -648,7 +648,8 @@
 		[alert setMessageText:[NSString stringWithFormat:@"You have already mounted this volume under \"%@\". Unmount it first, please!", [localDirectory stringValue]]];
 		[alert addButtonWithTitle:@"OK"];
 		
-		long response = [alert runModal];
+		//long response =
+		[alert runModal];
 		//if(response == NSAlertFirstButtonReturn) canContinue = NO;
 		//shouldSkipConnectionError = YES;
 		
@@ -656,7 +657,7 @@
 	}
 	else if(implementation == IMPLEMENTATION_PRQSORG && ![mng fileExistsAtPath:@"/Applications/sshfs/bin/mount_sshfs"])
 	{
-		alert = [NSAlert alertWithMessageText:@"SSHFS console utility missing" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You do not seem to have SSHFS console utility from pqrs.org installed.\n\nPlease download and install it either from\nhttp://pqrs.org/macosx/sshfs/\n\nor from SSHFS GUI project at\n\nhttp://code.google.com/p/sshfs-gui/"];
+		alert = [NSAlert alertWithMessageText:@"SSHFS console utility missing" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You do not seem to have SSHFS console utility from pqrs.org installed.\n\nPlease download and install it either from\nhttp://pqrs.org/macosx/sshfs/\n\nor from SSHFS GUI project at\n\nhttp://code.google.com/p/sshfs-gui/. Verify that it is installed under /Applications/sshfs/bin/mount_sshfs."];
 	
 		[alert runModal];
 		
@@ -745,7 +746,7 @@
 			SecKeychainItemRef itemRef;
 			
 			const char *serverName = [srv UTF8String];
-			UInt32 serverNameLength = (UInt32) strlen(serverName);
+			UInt32 serverNameLength = serverName != NULL ? (UInt32) strlen(serverName) : 0;
 			
 			const char *accountName = [[login stringValue] UTF8String];
 			UInt32 accountNameLength = (UInt32) strlen(accountName);
