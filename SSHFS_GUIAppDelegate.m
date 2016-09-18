@@ -49,6 +49,11 @@
 	NSLog(@"pipes ids: read=%d,%d ; write=%d,%d\n", pipes_read[0], pipes_read[1], pipes_write[0], pipes_write[1]);
 #endif
 	
+	NSString * currentPath = [[[NSProcessInfo processInfo]environment]objectForKey:@"PATH"];
+	putenv((char *) [[NSString stringWithFormat:@"PATH=%@:%@:%@", currentPath, @"/usr/local/bin/", @"/opt/local/bin"] UTF8String]);
+	
+	NSLog(@"Modified PATH variable: %@", [[[NSProcessInfo processInfo]environment]objectForKey:@"PATH"]);
+	
 	[NSThread detachNewThreadSelector:@selector(passwordTeller) toTarget:self withObject:nil];
 }
 
