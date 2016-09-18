@@ -149,7 +149,7 @@
 		
 		if( [mng fileExistsAtPath:@"/Library/Frameworks/MacFUSE.framework"] )
 		{
-			[def setObject:@"MacFUSE" forKey:@"implementation"];
+			[def setObject:@"Bundled MacFUSE" forKey:@"implementation"];
 		}
 		else if( [mng fileExistsAtPath:@"/usr/local/bin/sshfs"] )
 		{
@@ -201,7 +201,7 @@
 		return NSTerminateLater;
 		
 		// there could be some processes left, which also
-		// will be killed after system("mount_ssfhs / sshfs-static-leopard ...") call fails
+		// will be killed after system("mount_sshfs / sshfs-static-leopard ...") call fails
 		// because of ourselves killing all child processes,
 		// including mount_sshfs / sshfs-static-leopard launched by system()
 	}
@@ -495,6 +495,8 @@
 	NSString *remote_dir = [directory stringValue];
 	NSString *cmdlnOpt = [cmdLineOptions stringValue];
 	
+	NSLog(@"sshfs path: %@", sshfsPath);
+	
 	switch(implementation)
 	{
 		case IMPLEMENTATION_PRQSORG:
@@ -507,7 +509,7 @@
 			}
 			
 			return [NSString stringWithFormat:@"%@ '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@ >%s 2>&1", sshfsPath, log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @"", ERR_TMPFILE];
-		case IMPLEMENTATION_MACFUSE:
+		case IMPLEMENTATION_BUNDLED:
 			chdir( [[[NSBundle mainBundle] bundlePath] UTF8String] );
 			return [NSString stringWithFormat:@"%@ '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@", sshfsPath, log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @""];
 			break;
@@ -522,10 +524,10 @@
 	compression = [def boolForKey:@"compression"];
 	useKeychain = [def boolForKey:@"useKeychain"];
 	
-	if( [[def stringForKey:@"implementation"] isEqualToString:@"MacFUSE"] )
+	if( [[def stringForKey:@"implementation"] isEqualToString:@"Bundled MacFUSE"] )
 	{
-		implementation = IMPLEMENTATION_MACFUSE;
-		sshfsPath = @"sshfs";
+		implementation = IMPLEMENTATION_BUNDLED;
+		sshfsPath = @"./Contents/Resources/sshfs-static-leopard";
 	}
 	else if( [[def stringForKey:@"implementation"] isEqualToString:@"SSHFS Binary"] )
 	{
@@ -820,7 +822,7 @@
 		{
 			[self killByPattern:@"sshfs %@@%@:", [login stringValue], srv];
 		}
-		else if(implementation == IMPLEMENTATION_MACFUSE)
+		else if(implementation == IMPLEMENTATION_BUNDLED)
 		{
 			[self killByPattern:@"./Contents/Resources/sshfs-static-leopard %@@%@:", [login stringValue], srv];
 		}
