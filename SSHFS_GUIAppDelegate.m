@@ -49,6 +49,11 @@
 	NSLog(@"pipes ids: read=%d,%d ; write=%d,%d\n", pipes_read[0], pipes_read[1], pipes_write[0], pipes_write[1]);
 #endif
 	
+	NSString * currentPath = [[[NSProcessInfo processInfo]environment]objectForKey:@"PATH"];
+	putenv((char *) [[NSString stringWithFormat:@"PATH=%@:%@:%@", currentPath, @"/usr/local/bin/", @"/opt/local/bin"] UTF8String]);
+	
+	NSLog(@"Modified PATH variable: %@", [[[NSProcessInfo processInfo]environment]objectForKey:@"PATH"]);
+	
 	[NSThread detachNewThreadSelector:@selector(passwordTeller) toTarget:self withObject:nil];
 }
 
@@ -144,7 +149,7 @@
 		
 		if( [mng fileExistsAtPath:@"/Library/Frameworks/MacFUSE.framework"] )
 		{
-			[def setObject:@"MacFUSE" forKey:@"implementation"];
+			[def setObject:@"Bundled MacFUSE" forKey:@"implementation"];
 		}
 		else if( [mng fileExistsAtPath:@"/usr/local/bin/sshfs"] )
 		{
@@ -196,7 +201,7 @@
 		return NSTerminateLater;
 		
 		// there could be some processes left, which also
-		// will be killed after system("mount_ssfhs / sshfs-static-leopard ...") call fails
+		// will be killed after system("mount_sshfs / sshfs-static-leopard ...") call fails
 		// because of ourselves killing all child processes,
 		// including mount_sshfs / sshfs-static-leopard launched by system()
 	}
@@ -401,7 +406,7 @@
 	NSAttributedString *credits = [[NSAttributedString alloc] initWithHTML:HTML documentAttributes:NULL];
 	
 	
-	NSString *version = @"1.3";
+	NSString *version = @"1.3.1";
 	NSString *applicationVersion = [NSString stringWithFormat:@"Version %@", version];
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"Credits", @"Version", @"ApplicationVersion", nil];
@@ -490,6 +495,8 @@
 	NSString *remote_dir = [directory stringValue];
 	NSString *cmdlnOpt = [cmdLineOptions stringValue];
 	
+	NSLog(@"sshfs path: %@", sshfsPath);
+	
 	switch(implementation)
 	{
 		case IMPLEMENTATION_PRQSORG:
@@ -502,7 +509,7 @@
 			}
 			
 			return [NSString stringWithFormat:@"%@ '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@ >%s 2>&1", sshfsPath, log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @"", ERR_TMPFILE];
-		case IMPLEMENTATION_MACFUSE:
+		case IMPLEMENTATION_BUNDLED:
 			chdir( [[[NSBundle mainBundle] bundlePath] UTF8String] );
 			return [NSString stringWithFormat:@"%@ '%@@%@:%@' '%@' -p %d %@ -o workaround=nonodelay -ovolname='%@@%@' -oNumberOfPasswordPrompts=1 -o transform_symlinks -o idmap=user %@", sshfsPath, log, srv, remote_dir, mnt_loc, intPort, cmdlnOpt, log, srv, compression ? @" -C" : @""];
 			break;
@@ -517,10 +524,10 @@
 	compression = [def boolForKey:@"compression"];
 	useKeychain = [def boolForKey:@"useKeychain"];
 	
-	if( [[def stringForKey:@"implementation"] isEqualToString:@"MacFUSE"] )
+	if( [[def stringForKey:@"implementation"] isEqualToString:@"Bundled MacFUSE"] )
 	{
-		implementation = IMPLEMENTATION_MACFUSE;
-		sshfsPath = @"sshfs";
+		implementation = IMPLEMENTATION_BUNDLED;
+		sshfsPath = @"./Contents/Resources/sshfs-static-leopard";
 	}
 	else if( [[def stringForKey:@"implementation"] isEqualToString:@"SSHFS Binary"] )
 	{
@@ -591,10 +598,10 @@
 	NSString *cmd        = [self getCommandString];
 	NSString *remote_dir = [directory stringValue];
 	NSString *cmdlnOpt   = [cmdLineOptions stringValue];
-	
+
+	/*
 	if (![mng fileExistsAtPath:mnt_loc])
 	{
-		/*
 		NSAlert *alert = [[NSAlert alloc]init];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert setMessageText:[NSString stringWithFormat:@"Warning: The local directory \"%@\" does not exist. Please create it in order to mount a remote share.", [localDirectory stringValue]]];
@@ -603,8 +610,8 @@
 		 {
 			 
 		 }];
-		 */
 	}
+	*/
 	
 	// check for errors in input parameters
 	
@@ -648,7 +655,8 @@
 		[alert setMessageText:[NSString stringWithFormat:@"You have already mounted this volume under \"%@\". Unmount it first, please!", [localDirectory stringValue]]];
 		[alert addButtonWithTitle:@"OK"];
 		
-		long response = [alert runModal];
+		//long response =
+		[alert runModal];
 		//if(response == NSAlertFirstButtonReturn) canContinue = NO;
 		//shouldSkipConnectionError = YES;
 		
@@ -656,7 +664,7 @@
 	}
 	else if(implementation == IMPLEMENTATION_PRQSORG && ![mng fileExistsAtPath:@"/Applications/sshfs/bin/mount_sshfs"])
 	{
-		alert = [NSAlert alertWithMessageText:@"SSHFS console utility missing" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You do not seem to have SSHFS console utility from pqrs.org installed.\n\nPlease download and install it either from\nhttp://pqrs.org/macosx/sshfs/\n\nor from SSHFS GUI project at\n\nhttp://code.google.com/p/sshfs-gui/"];
+		alert = [NSAlert alertWithMessageText:@"SSHFS console utility missing" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"You do not seem to have SSHFS console utility from pqrs.org installed.\n\nPlease download and install it either from\nhttp://pqrs.org/macosx/sshfs/\n\nor from SSHFS GUI project at\n\nhttp://code.google.com/p/sshfs-gui/. Verify that it is installed under /Applications/sshfs/bin/mount_sshfs."];
 	
 		[alert runModal];
 		
@@ -745,7 +753,7 @@
 			SecKeychainItemRef itemRef;
 			
 			const char *serverName = [srv UTF8String];
-			UInt32 serverNameLength = (UInt32) strlen(serverName);
+			UInt32 serverNameLength = serverName != NULL ? (UInt32) strlen(serverName) : 0;
 			
 			const char *accountName = [[login stringValue] UTF8String];
 			UInt32 accountNameLength = (UInt32) strlen(accountName);
@@ -814,7 +822,7 @@
 		{
 			[self killByPattern:@"sshfs %@@%@:", [login stringValue], srv];
 		}
-		else if(implementation == IMPLEMENTATION_MACFUSE)
+		else if(implementation == IMPLEMENTATION_BUNDLED)
 		{
 			[self killByPattern:@"./Contents/Resources/sshfs-static-leopard %@@%@:", [login stringValue], srv];
 		}

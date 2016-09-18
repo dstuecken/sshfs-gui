@@ -1,7 +1,7 @@
 SSHFS GUI
 =========
 
-Download Installer: https://github.com/dstuecken/sshfs-gui/raw/develop/Installer/sshfs-gui-1.3.dmg
+Download Installer: https://github.com/dstuecken/sshfs-gui/raw/develop/Installer/sshfs-gui-1.3.1.dmg
 
 <img src="https://raw.githubusercontent.com/dstuecken/sshfs-gui/develop/screenshot.png" width="500">
 
@@ -17,13 +17,13 @@ sshfs-gui is a GUI wrapper for SSHFS
 
 ### Dependencies
 
-You need Mac OS X 10.9+ and at least one of the utilities listed below in order to use the sshfs gui:
+You need Mac OS X 10.9+.
+
+Additional sshfs clients are not needed anymore, but you can install one of these if you want to:
 
   - sshfs from https://github.com/osxfuse/sshfs/releases / http://osxfuse.github.io/
   - MacFUSE from https://code.google.com/p/macfuse/
   - or a custom compiled sshfs from brew, macports, ..
-
-Otherwise this GUI won't function.
 
 ### Credits 
 
