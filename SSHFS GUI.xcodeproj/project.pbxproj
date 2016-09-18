@@ -277,7 +277,7 @@
 				INFOPLIST_FILE = "SSHFS_GUI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.YNProducts.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.dstuecken.SSHFS-GUI";
 				PRODUCT_NAME = "SSHFS GUI";
 				SDKROOT = macosx;
 			};
@@ -296,7 +296,7 @@
 				INFOPLIST_FILE = "SSHFS_GUI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.YNProducts.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.dstuecken.SSHFS-GUI";
 				PRODUCT_NAME = "SSHFS GUI";
 				SDKROOT = macosx;
 			};

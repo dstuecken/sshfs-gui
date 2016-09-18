@@ -406,7 +406,7 @@
 	NSAttributedString *credits = [[NSAttributedString alloc] initWithHTML:HTML documentAttributes:NULL];
 	
 	
-	NSString *version = @"1.3";
+	NSString *version = @"1.3.1";
 	NSString *applicationVersion = [NSString stringWithFormat:@"Version %@", version];
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"Credits", @"Version", @"ApplicationVersion", nil];
