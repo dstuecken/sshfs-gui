@@ -224,7 +224,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cc -arch i686 -o asker asker.c";
+			shellScript = "cc -arch arm64 -o asker asker.c";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -276,7 +276,7 @@
 				GCC_PREFIX_HEADER = SSHFS_GUI_Prefix.pch;
 				INFOPLIST_FILE = "SSHFS_GUI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.dstuecken.SSHFS-GUI";
 				PRODUCT_NAME = "SSHFS GUI";
 				SDKROOT = macosx;
@@ -295,7 +295,7 @@
 				GCC_PREFIX_HEADER = SSHFS_GUI_Prefix.pch;
 				INFOPLIST_FILE = "SSHFS_GUI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.dstuecken.SSHFS-GUI";
 				PRODUCT_NAME = "SSHFS GUI";
 				SDKROOT = macosx;
